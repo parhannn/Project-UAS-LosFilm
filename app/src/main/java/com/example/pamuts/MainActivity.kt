@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.example.pamuts.databinding.ActivityMainBinding
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,13 +25,13 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
-        val navigationHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
+        val navigationHost = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment?)!!
         val navController = navigationHost.navController
 
         binding.navView?.let {
             appBarConfiguration = AppBarConfiguration(
                 setOf(
-                    R.id.nav_home, R.id.nav_profile
+                    R.id.nav_home,R.id.nav_fav, R.id.nav_profile
                 ),
                 binding.drawerLayout
             )
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         binding.appBarMain.contentMain.bottomNavView?.let {
             appBarConfiguration = AppBarConfiguration(
                 setOf(
-                    R.id.nav_home, R.id.nav_profile
+                    R.id.nav_home,R.id.nav_fav, R.id.nav_profile
                 )
             )
             setupActionBarWithNavController(navController, appBarConfiguration)
@@ -50,9 +51,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
+        val result = super.onCreateOptionsMenu(menu)
+        // Using findViewById because NavigationView exists in different layout files
+        // between w600dp and w1240dp
+        val navView: NavigationView? = findViewById(R.id.nav_view)
+        if (navView == null) {
+            // The navigation drawer already has the items including the items in the overflow menu
+            // We only inflate the overflow menu if the navigation drawer isn't visible
+            menuInflater.inflate(R.menu.main, menu)
+        }
+        return result
     }
 
     override fun onSupportNavigateUp(): Boolean {

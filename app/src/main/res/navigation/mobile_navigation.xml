@@ -8,12 +8,19 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.pamuts.ui.home.HomeFragment"
-        android:label="@string/menu_dashboard"
+        android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_nav_home_to_nav_user_detail"
             app:destination="@id/nav_user_detail" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_fav"
+        android:name="com.example.pamuts.ui.favorite.FavoriteFragment"
+        android:label="Favorite"
+        tools:layout="@layout/fragment_favorite"
+        />
 
     <fragment
         android:id="@+id/nav_user_detail"
