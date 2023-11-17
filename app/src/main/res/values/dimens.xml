@@ -27,7 +27,7 @@
     <!--searchBar dimen-->
     <dimen name="searchBar_layout_width">0dp</dimen>
     <dimen name="searchBar_cardCornerRadius">50dp</dimen>
-    <dimen name="searchBar_cardElevation">12dp</dimen>
+    <dimen name="searchBar_cardElevation">3dp</dimen>
 
     <!--login dimen-->
     <!--username login-->
