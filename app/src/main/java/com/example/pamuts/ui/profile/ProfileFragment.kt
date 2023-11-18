@@ -36,17 +36,17 @@ class ProfileFragment : Fragment() {
             }
         }
         val root: View = binding.root
-        val textUser: TextView = binding.textUser
-        val textGit: TextView = binding.textGit
-        val textNik: TextView = binding.textNik
-        val textEmail: TextView = binding.textEmail
+//        val textUser: TextView = binding.textUser
+//        val textGit: TextView = binding.textGit
+//        val textNik: TextView = binding.textNik
+//        val textEmail: TextView = binding.textEmail
 
-        profileViewModel.text.observe(viewLifecycleOwner) {
-            textUser.text = "farhan04"
-            textGit.text = "parhannn"
-            textNik.text = "123456123568199"
-            textEmail.text = "farhannn58@gmail.com"
-        }
+//        profileViewModel.text.observe(viewLifecycleOwner) {
+//            textUser.text = "farhan04"
+//            textGit.text = "parhannn"
+//            textNik.text = "123456123568199"
+//            textEmail.text = "farhannn58@gmail.com"
+//        }
         return root
     }
 

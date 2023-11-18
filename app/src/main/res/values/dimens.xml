@@ -18,9 +18,9 @@
     <dimen name="skill_content_layout_height">0dp</dimen>
 
     <!--item dimen-->
-    <dimen name="item_card_padding">15dp</dimen>
-    <dimen name="item_card_width">60dp</dimen>
-    <dimen name="item_card_height">60dp</dimen>
+    <dimen name="item_card_padding">10dp</dimen>
+    <dimen name="item_card_width">70dp</dimen>
+    <dimen name="item_card_height">70dp</dimen>
     <dimen name="item_card_cornerRadius">20dp</dimen>
     <dimen name="item_textSize">16sp</dimen>
 
