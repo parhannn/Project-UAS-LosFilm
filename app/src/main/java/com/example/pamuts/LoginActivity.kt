@@ -27,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
         databaseReference = firebaseDatabase.reference.child("users")
 
         binding.loginButton.setOnClickListener {
+            Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
         }

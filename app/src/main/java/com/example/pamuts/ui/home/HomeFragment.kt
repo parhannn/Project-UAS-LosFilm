@@ -1,5 +1,6 @@
 package com.example.pamuts.ui.home
 
+import android.content.res.TypedArray
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,11 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pamuts.R
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlin.collections.ArrayList
 import java.util.*
 
@@ -26,12 +22,13 @@ private const val t20 = "t2"
 
 class HomeFragment : Fragment() {
     private var t1: String? = null
-
     private lateinit var adapter : MyAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchView
-    private lateinit var userArrayList : ArrayList<UserData>
-    private lateinit var database : DatabaseReference
+    private lateinit var movieArrayList : ArrayList<MovieData>
+    private lateinit var movieImage : TypedArray
+    private lateinit var movieName: Array<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -54,13 +51,13 @@ class HomeFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
-        userArrayList = arrayListOf<UserData>()
+        movieArrayList = arrayListOf<MovieData>()
         getUserData()
-        adapter = MyAdapter(userArrayList)
+        adapter = MyAdapter(movieArrayList)
         recyclerView.adapter = adapter
         searchView = view.findViewById(R.id.search_action)
         adapter.onItemClick = {
-            it.username?.let { it1 -> navigateToDetail(it1) }
+            it.movieName?.let { it1 -> navigateToDetail(it1) }
         }
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -87,15 +84,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun navigateToDetail(extraName: String){
-        findNavController().navigate(HomeFragmentDirections.actionNavHomeToNavUserDetail(extraName))
+        findNavController().navigate(HomeFragmentDirections.actionNavHomeToNavMovieDetail(extraName))
     }
 
     private fun filterList(query: String?) {
 
         if (query != null) {
-            val filteredList = ArrayList<UserData>()
-            for (i in userArrayList) {
-                if (i.username?.lowercase(Locale.ROOT)!!.contains(query)) {
+            val filteredList = ArrayList<MovieData>()
+            for (i in movieArrayList) {
+                if (i.movieName?.lowercase(Locale.ROOT)!!.contains(query)) {
                     filteredList.add(i)
                 }
             }
@@ -110,27 +107,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun getUserData() {
+        movieArrayList = arrayListOf<MovieData>()
+        movieImage = resources.obtainTypedArray(R.array.movie_image_array)
+        movieName = resources.getStringArray(R.array.movie_name_array)
 
-        database = FirebaseDatabase.getInstance().getReference("users")
-
-        database.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                if (snapshot.exists()) {
-                    for (userSnapshot in snapshot.children) {
-                        val user = userSnapshot.getValue(UserData::class.java)
-                        userArrayList.add(user!!)
-                    }
-                }
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
-
+        for (i in 0..<movieImage.length()) {
+            val movie = MovieData(movieImage.getResourceId(i,0), movieName[i])
+            movieArrayList.add(movie)
+        }
     }
 
 }

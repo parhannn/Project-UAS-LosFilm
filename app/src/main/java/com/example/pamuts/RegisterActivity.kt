@@ -27,6 +27,7 @@ class RegisterActivity : AppCompatActivity(){
         databaseReference = firebaseDatabase.reference.child("users")
 
         binding.registerButton.setOnClickListener {
+            Toast.makeText(this, "Register Successful", Toast.LENGTH_SHORT).show()
             val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
             startActivity(intent)
         }

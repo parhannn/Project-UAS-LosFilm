@@ -34,7 +34,29 @@
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_photo" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_photo" >
+
+        <TextView
+            android:id="@+id/nameOfUser"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name of User" />
+
+        <TextView
+            android:id="@+id/handphoneNum"
+            android:layout_marginTop="90dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Handphone Number" />
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/logout_button"

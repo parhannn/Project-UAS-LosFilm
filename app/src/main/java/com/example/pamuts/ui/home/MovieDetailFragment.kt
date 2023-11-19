@@ -1,16 +1,16 @@
 package com.example.pamuts.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.pamuts.LoginActivity
+import com.example.pamuts.MainActivity
+import com.example.pamuts.databinding.FragmentProfileBinding
 import com.example.pamuts.databinding.MovieDetailBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class MovieDetailFragment : Fragment() {
 
@@ -31,7 +31,15 @@ class MovieDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = MovieDetailBinding.inflate(inflater, container, false)
-        return binding.root
+        binding.goBack.setOnClickListener {
+            activity?.let {
+                val intent = Intent(it, MainActivity::class.java)
+                it.startActivity(intent)
+            }
+        }
+        val root: View = binding.root
+
+        return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,42 +47,6 @@ class MovieDetailFragment : Fragment() {
         val name = arguments?.getString(EXTRA_NAME).toString()
         if (arguments != null) {
             binding.textName.text = name
-
-            readData(name)
-
         }
-
     }
-
-    private fun readData(username: String) {
-        database = FirebaseDatabase.getInstance().getReference("users")
-            database.addValueEventListener(object: ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-
-                    if (snapshot.exists()) {
-                        for (userSnapshot in snapshot.children) {
-                            val user = userSnapshot.getValue(UserData::class.java)
-
-                            if (user != null && username == user.username) {
-                                val githubUsername = snapshot.child("githubUsername")
-                                val nik = snapshot.child("nik")
-                                val email = snapshot.child("email")
-
-                                binding.textGithubUsername.text = githubUsername.toString()
-                                binding.textNik.text = nik.toString()
-                                binding.textEmail.text = email.toString()
-                            }
-                        }
-                    }
-
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
-
-    }
-
 }
